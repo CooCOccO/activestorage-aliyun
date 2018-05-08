@@ -4,7 +4,7 @@ require "aliyun/oss"
 module ActiveStorage
   class Service::AliyunService < Service
     def initialize(**config)
-      Aliyun::Common::Logging.set_log_file("/dev/null")
+      AliyunOSS::Common::Logging.set_log_file("/dev/null")
       @config = config
     end
 
@@ -159,7 +159,7 @@ module ActiveStorage
       end
 
       def client
-        @client ||= Aliyun::OSS::Client.new(
+        @client ||= AliyunOSS::OSS::Client.new(
           endpoint: endpoint,
           access_key_id: config.fetch(:access_key_id),
           access_key_secret: config.fetch(:access_key_secret),
