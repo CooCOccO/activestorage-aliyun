@@ -32,8 +32,8 @@ class ActiveStorageAliyun::Test < ActiveSupport::TestCase
   }
 
   def fixure_url_for(path)
-    filename = CGI.escape(["activestorage-aliyun-test", path].join("/"))
-    host = ENV["ALIYUN_ENDPOINT"].gsub("://", "://#{ENV["ALIYUN_BUCKET"]}.")
+    filename = File.join("activestorage-aliyun-test", path)
+    host = ENV["ALIYUN_ENDPOINT"].sub("://", "://#{ENV["ALIYUN_BUCKET"]}.")
     "#{host}/#{filename}"
   end
 
@@ -124,6 +124,21 @@ class ActiveStorageAliyun::Test < ActiveSupport::TestCase
     end
 
     assert_equal [ FIXTURE_DATA ], chunks
+  end
+
+  test "downloading chunk" do
+    chunk = @service.download_chunk(FIXTURE_KEY, 0..8)
+    assert_equal 9, chunk.length
+    assert_equal FIXTURE_DATA[0..8], chunk
+
+    # exclude end
+    chunk = @service.download_chunk(FIXTURE_KEY, 0...8)
+    assert_equal 8, chunk.length
+    assert_equal FIXTURE_DATA[0...8], chunk
+
+    chunk = @service.download_chunk(FIXTURE_KEY, 10...15)
+    assert_equal 5, chunk.length
+    assert_equal FIXTURE_DATA[10..14], chunk
   end
 
   test "existing" do

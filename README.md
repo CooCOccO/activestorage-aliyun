@@ -40,7 +40,7 @@ production:
 ### Use for image url
 
 ```erb
-Orignial File URL:
+Original File URL:
 
 <%= image_tag @photo.image.service_url %>
 ```
@@ -72,7 +72,13 @@ If you want to get original filename (Include Chinese and other UTF-8 chars), fo
 
 ## Contributing
 
-Contribution directions go here.
+### Run test
+
+```bash
+$ bin/test test/activestorage_aliyun_test.rb
+# run a line
+$ bin/test test/activestorage_aliyun_test.rb:129
+```
 
 ## License
 
