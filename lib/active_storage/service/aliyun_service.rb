@@ -93,7 +93,7 @@ module ActiveStorage
     # Allowed Headers: *
     def url_for_direct_upload(key, expires_in:, content_type:, content_length:, checksum:)
       instrument :url, key: key do |payload|
-        generated_url = bucket.object_url(path_for(key), false)
+        generated_url = bucket.object_url(path_for(key), false).gsub('http://', 'https://')
         payload[:url] = generated_url
         generated_url
       end
